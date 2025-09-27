@@ -1,0 +1,14 @@
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE events (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id),
+  summary TEXT,
+  dtstart TIMESTAMP WITH TIME ZONE,
+  dtend TIMESTAMP WITH TIME ZONE,
+  location TEXT
+);
