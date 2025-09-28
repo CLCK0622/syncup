@@ -1,8 +1,5 @@
 import { getVotes, VoteData } from '@/lib/db';
-import dynamic from 'next/dynamic'; // Import dynamic
-
-// Dynamically import the Map component with ssr: false
-const Map = dynamic(() => import('./map'), { ssr: false });
+import ClientMapWrapper from '@/components/ClientMapWrapper'; // Import the new ClientMapWrapper
 
 interface GeoIpResponse {
   lat: number;
@@ -63,7 +60,7 @@ export default async function Stats() {
   return (
     <div className="main-container">
       <header className="dashboard-header flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <div className="app-header">
           <img src="/logo-512x512.png" alt="SyncUP Logo" className="app-logo" />
           <h1 className="app-title">SyncUP</h1>
         </div>
@@ -97,10 +94,8 @@ export default async function Stats() {
 
             <div className="mb-8">
               <h2>Vote Map</h2>
-              {/* Added explicit dimensions for the map container */}
-              <div className="map-container" style={{ width: '100%', height: '500px' }}>
-                <Map data={locations} />
-              </div>
+              {/* The map-container div is now handled within ClientMapWrapper */}
+              <ClientMapWrapper locations={locations} />
             </div>
 
             <div>
