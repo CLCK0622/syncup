@@ -21,6 +21,7 @@
     "@types/pg": "^8.11.6",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-simple-maps": "^3.0.6",
     "sass": "^1.77.4",
     "typescript": "^5"
   },
