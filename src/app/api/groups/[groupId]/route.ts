@@ -1,12 +1,9 @@
 
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import pool from '@/lib/db';
 
-interface Params {
-  groupId: string;
-}
-
-export async function GET(request: Request, { params }: { params: Params }) {
+// Correctly type the context for a dynamic route
+export async function GET(request: NextRequest, { params }: { params: { groupId: string } }) {
   const { groupId } = params;
 
   if (!groupId) {

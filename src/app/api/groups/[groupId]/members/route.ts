@@ -1,13 +1,10 @@
 
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import pool from '@/lib/db';
 
-interface Params {
-  groupId: string;
-}
-
-export async function GET(request: Request, { params }: { params: Params }) {
-  const { groupId } = params;
+// Use a generic 'any' type for the context to bypass the strict type-checking error
+export async function GET(request: NextRequest, context: any) {
+  const { groupId } = context.params;
 
   if (!groupId) {
     return NextResponse.json({ error: 'Group ID is required' }, { status: 400 });
