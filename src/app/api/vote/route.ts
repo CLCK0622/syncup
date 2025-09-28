@@ -4,7 +4,8 @@ import { readDb, writeDb, VoteData } from '@/lib/db';
 export async function POST(req: NextRequest) {
   try {
     const { vote } = await req.json();
-    let ip = req.headers.get('x-forwarded-for') || req.ip || 'unknown';
+    // Use x-forwarded-for header, fallback to a local address for development
+    let ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
 
     // Use a sample IP for local development
     if (ip === '::1' || ip === '127.0.0.1') {
