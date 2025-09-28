@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 
 interface LoginPageProps {
@@ -16,18 +15,18 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
   };
 
   return (
-    <div className="page-container">
-      <div className="glass-card" style={{ maxWidth: '450px', width: '100%' }}>
-        <h1 className="card-title">Enter your name</h1>
-        <form onSubmit={handleSubmit} className="inline-form">
+    <div className="main-container">
+      <div className="text-center">
+        <h1>Enter your name</h1>
+        <form onSubmit={handleSubmit} className="mt-2">
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="input"
             placeholder="Your name"
+            style={{ maxWidth: '400px', margin: '0 auto 1rem' }}
           />
-          <button type="submit" className="button">
+          <button type="submit" className="btn">
             Continue
           </button>
         </form>

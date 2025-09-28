@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 
 interface DashboardProps {
@@ -90,26 +89,25 @@ export default function Dashboard({ user }: DashboardProps) {
   };
 
   return (
-    <div className="dashboard-container">
-      <header className="dashboard-header">
-        <h1 className="page-title">Welcome, {user.name}!</h1>
-        <div className="dashboard-actions">
-          <label className="upload-label">
-            Upload Calendar
-            <input type="file" accept=".ics" onChange={handleFileUpload} style={{ display: 'none' }} />
-          </label>
-          <button onClick={fetchEvents} className="button">
-            Refresh
-          </button>
-        </div>
-      </header>
+    <div className="main-container">
+        <header className="dashboard-header">
+            <h1>Welcome, {user.name}!</h1>
+            <div className="dashboard-actions">
+                <label className="upload-label">
+                    Upload Calendar
+                    <input type="file" accept=".ics" onChange={handleFileUpload} style={{ display: 'none' }} />
+                </label>
+                <button onClick={fetchEvents} className="btn">
+                    Refresh
+                </button>
+            </div>
+        </header>
 
       <div className="dashboard-grid">
-        <div className="dashboard-column-main">
-          <h2 className="card-title">Upcoming Plans</h2>
-          <div className="list-container">
+        <div className="dashboard-column">
+          <h2>Upcoming Plans</h2>
             {events.map((event, index) => (
-              <div key={index} className="glass-card">
+              <div key={index} className="event-card">
                 <p className="event-summary">{event.summary}</p>
                 <p>User: {event.name}</p>
                 <p>Start: {new Date(event.dtstart).toLocaleString()}</p>
@@ -117,13 +115,11 @@ export default function Dashboard({ user }: DashboardProps) {
                 {event.location && <p>Location: {event.location}</p>}
               </div>
             ))}
-          </div>
         </div>
 
-        <div>
-          <h2 className="card-title">Common Free Days (Group of 3+)</h2>
-          <div className="glass-card">
-            <div className="list-container">
+        <div className="dashboard-column">
+          <h2>Common Free Days (Group of 3+)</h2>
+          <div className="free-day-card">
               {commonFreeDays.length > 0 ? (
                 commonFreeDays.map((day, index) => (
                   <p key={index} className="free-day-item">{day.toLocaleDateString()}</p>
@@ -131,7 +127,6 @@ export default function Dashboard({ user }: DashboardProps) {
               ) : (
                 <p>No common free days found in the next month.</p>
               )}
-            </div>
           </div>
         </div>
       </div>
