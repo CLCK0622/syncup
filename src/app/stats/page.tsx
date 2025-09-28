@@ -15,7 +15,9 @@ interface MarkerData {
 }
 
 async function getStats() {
-  const db = await getVotes(); // Fetch votes from the database
+  // Ensure data is always fresh by setting cache: 'no-store'
+  const db = await getVotes(); // getVotes internally uses the pool, which doesn't have fetch, so this is fine.
+
   const stats = {
     total: db.length,
     up: db.filter((v) => v.vote === 'up').length,
@@ -32,14 +34,15 @@ async function getStats() {
   const locations = await Promise.all(
     Object.keys(stats.byIp).map(async (ip) => {
       try {
-        const response = await fetch(`http://localhost:3000/api/geoip?ip=${ip}`);
+        // Ensure geoip data is always fresh
+        const response = await fetch(`http://localhost:3000/api/geoip?ip=${ip}`, { cache: 'no-store' });
         const data: GeoIpResponse = await response.json();
         if (data.lat && data.lon) {
           return {
             name: data.city || ip,
             coordinates: [data.lon, data.lat],
             markerOffset: -15,
-          } as MarkerData; // Explicitly cast to MarkerData
+          } as MarkerData;
         }
       } catch (error) {
         console.error(`Error fetching geoip for ${ip}`, error);
@@ -84,7 +87,8 @@ export default async function Stats() {
 
             <div className="mb-8">
               <h2>Vote Map</h2>
-              <div className="map-container">
+              {/* Added explicit dimensions for the map container */}
+              <div className="map-container" style={{ width: '100%', height: '500px' }}>
                 <Map data={locations} />
               </div>
             </div>

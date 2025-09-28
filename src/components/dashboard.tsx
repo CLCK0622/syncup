@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import TimeSlotList from './TimeSlotList';
 import EventModal from './EventModal';
+import ChatbotPlaceholder from './ChatbotPlaceholder';
 
 interface DashboardProps {
   user: { id: number; name: string };
@@ -40,8 +41,6 @@ export default function Dashboard({ user }: DashboardProps) {
   };
 
   const fetchUsers = async () => {
-    // In a real app, you would fetch this from an API
-    // For now, we'll extract it from the events
     const response = await fetch('/api/calendars');
     if (response.ok) {
         const data: CalendarEvent[] = await response.json();
@@ -168,21 +167,12 @@ export default function Dashboard({ user }: DashboardProps) {
 
       <div className="dashboard-grid">
         <div className="dashboard-column">
-          <h2>Upcoming Plans</h2>
-            {events.map((event, index) => (
-              <div key={index} className="event-card">
-                <p className="event-summary">{event.summary}</p>
-                <p>User: {event.name}</p>
-                <p>Start: {new Date(event.dtstart).toLocaleString()}</p>
-                <p>End: {new Date(event.dtend).toLocaleString()}</p>
-                {event.location && <p>Location: {event.location}</p>}
-              </div>
-            ))}
+          <h2>Common Free Time Slots (Group of 3+)</h2>
+          <TimeSlotList timeSlots={commonFreeTimeSlots} onSelectSlot={handleSchedule} />
         </div>
 
         <div className="dashboard-column">
-          <h2>Common Free Time Slots (Group of 3+)</h2>
-          <TimeSlotList timeSlots={commonFreeTimeSlots} onSelectSlot={handleSchedule} />
+          <ChatbotPlaceholder />
         </div>
       </div>
 

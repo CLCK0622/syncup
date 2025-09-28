@@ -15,18 +15,21 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
   };
 
   return (
-    <div className="main-container flex flex-col items-center justify-center min-h-screen">
-      <div className="text-center p-8 bg-card rounded-lg shadow-lg border border-border">
-        <h1 className="text-3xl font-semibold mb-6">Enter your name</h1>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-background">
+      <div className="w-full max-w-sm p-8 space-y-6 bg-card rounded-lg shadow-lg border border-border">
+        <h1 className="text-3xl font-bold text-center text-foreground">Login</h1>
+        <p className="text-sm text-center text-muted-foreground">
+          Please use a new username, and use this username for all subsequent entries.
+        </p>
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Your name"
+            placeholder="Your username"
             className="input"
           />
-          <button type="submit" className="btn">
+          <button type="submit" className="btn w-full">
             Continue
           </button>
         </form>
