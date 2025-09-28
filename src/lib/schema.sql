@@ -18,3 +18,15 @@ CREATE TABLE votes (
   vote VARCHAR(10) NOT NULL,
   timestamp TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE invitations (
+  id SERIAL PRIMARY KEY,
+  sender_user_id INTEGER REFERENCES users(id) NOT NULL,
+  recipient_user_id INTEGER REFERENCES users(id) NOT NULL,
+  event_summary TEXT NOT NULL,
+  dtstart TIMESTAMP WITH TIME ZONE NOT NULL,
+  dtend TIMESTAMP WITH TIME ZONE NOT NULL,
+  gpt_suggestion TEXT,
+  status VARCHAR(20) DEFAULT 'pending' NOT NULL, -- 'pending', 'accepted', 'rejected'
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);

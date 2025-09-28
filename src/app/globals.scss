@@ -1,66 +1,34 @@
 /* Base Styles */
 :root {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
+  --background: 0 0% 100%; /* White background */
+  --foreground: 222.2 84% 4.9%; /* Black foreground */
 
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%; /* White card background */
+  --card-foreground: 222.2 84% 4.9%; /* Black card foreground */
 
-  --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%; /* White popover background */
+  --popover-foreground: 222.2 84% 4.9%; /* Black popover foreground */
 
-  --primary: 222.2 47.4% 11.2%;
-  --primary-foreground: 210 40% 98%;
+  --primary: 222.2 47.4% 11.2%; /* Dark primary color */
+  --primary-foreground: 210 40% 98%; /* Light primary foreground */
 
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 210 40% 96.1%; /* Light secondary color */
+  --secondary-foreground: 222.2 47.4% 11.2%; /* Dark secondary foreground */
 
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
+  --muted: 210 40% 96.1%; /* Light muted color */
+  --muted-foreground: 215.4 16.3% 46.9%; /* Dark muted foreground */
 
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
+  --accent: 210 40% 96.1%; /* Light accent color */
+  --accent-foreground: 222.2 47.4% 11.2%; /* Dark accent foreground */
 
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
+  --destructive: 0 84.2% 60.2%; /* Red destructive color */
+  --destructive-foreground: 210 40% 98%; /* Light destructive foreground */
 
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 222.2 84% 4.9%;
+  --border: 214.3 31.8% 91.4%; /* Light border color */
+  --input: 214.3 31.8% 91.4%; /* Light input border color */
+  --ring: 222.2 84% 4.9%; /* Dark ring color */
 
   --radius: 0.5rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: 0 0% 5%; /* Pure black or very dark grey background */
-    --foreground: 210 40% 98%;
-
-    --card: 0 0% 8%; /* Dark grey card background */
-    --card-foreground: 210 40% 98%;
-
-    --popover: 0 0% 8%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-  }
 }
 
 body {
@@ -81,6 +49,10 @@ body {
   background-color: hsl(var(--card));
   border-radius: var(--radius);
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.login-card-fixed-width {
+  width: 250px; /* Fixed narrow width for login card */
 }
 
 /* Headings */
@@ -189,9 +161,8 @@ a {
 /* Forms */
 input[type="text"],
 input[type="file"] {
-  display: flex;
+  box-sizing: border-box; /* Added to ensure width includes padding and border */
   height: 2.5rem;
-  width: 100%;
   border-radius: var(--radius);
   border: 1px solid hsl(var(--input));
   background-color: hsl(var(--background));
@@ -381,6 +352,8 @@ input[type="file"] {
   border-radius: var(--radius);
   width: 90%;
   max-width: 500px;
+  max-height: 90vh; /* Added max-height */
+  overflow-y: auto; /* Added overflow-y for scrolling */
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   border: 1px solid hsl(var(--border));
 

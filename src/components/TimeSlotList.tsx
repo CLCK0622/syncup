@@ -1,6 +1,7 @@
 interface TimeSlot {
   start: Date;
   end: Date;
+  availableUsers: string[]; // Added to store names of available users
 }
 
 interface TimeSlotListProps {
@@ -14,7 +15,10 @@ export default function TimeSlotList({ timeSlots, onSelectSlot }: TimeSlotListPr
       {timeSlots.length > 0 ? (
         timeSlots.map((slot, index) => (
           <div key={index} className="free-day-item">
-            <span>{slot.start.toLocaleString()}</span>
+            <div>
+              <span>{slot.start.toLocaleString()} - {slot.end.toLocaleString()}</span>
+              <p className="text-sm text-muted-foreground">Available: {slot.availableUsers.join(', ')}</p>
+            </div>
             <button onClick={() => onSelectSlot(slot)} className="btn btn-outline">
               Schedule
             </button>
