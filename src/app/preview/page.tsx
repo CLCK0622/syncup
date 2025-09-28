@@ -27,7 +27,8 @@ export default function Preview() {
         </h1>
 
         <p className="mt-1 mb-2">
-          This is a brief introduction to what we are doing.
+          Ever try to grab coffee, hit the gym, or catch a concert with friends but can’t line up schedules?
+          We’re testing a new app that syncs with your calendar (Google/Apple), finds when your free time overlaps with others, and suggests activities you can do together—from workouts to study sessions to last-minute hangs.
         </p>
 
         {!voted ? (
