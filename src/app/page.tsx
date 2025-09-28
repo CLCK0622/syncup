@@ -62,11 +62,13 @@ export default function Home() {
   }
 
   return (
-    <div className="main-div-container">
+    <div>
       {user ? (
         <Dashboard user={user} onSignOut={handleSignOut} onUserUpdate={refreshUser} />
       ) : (
-        <LoginPage onLogin={handleLogin} />
+          <div className="main-div-container">
+            <LoginPage onLogin={handleLogin} />
+          </div>
       )}
     </div>
   );
