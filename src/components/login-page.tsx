@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 
 interface LoginPageProps {
@@ -15,25 +16,32 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-background">
-      <div className="login-card-fixed-width mx-auto my-8 p-4 space-y-4 bg-card rounded-lg shadow-lg border border-border">
-        <img src="/logo-512x512.png" alt="SyncUP Logo" className="login-logo" /> {/* Reverted to custom class */}
-        <h1 className="text-xl font-bold text-center text-foreground">Login</h1>
-        <p className="text-sm text-center text-muted-foreground leading-tight">
-          Please use a new username, and use this username for all subsequent entries.
+    <div className="login-page-container">
+      <div className="login-card">
+        <img src="/logo-512x512.png" alt="SyncUP Logo" className="login-logo" />
+        <h1 className="login-title">Login to SyncUp</h1>
+        <p className="login-description">
+          Enter a consistent username for all your sessions.
         </p>
-        <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-4">
+        <form onSubmit={handleSubmit} className="login-form">
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Username"
-            className="input text-sm w-4/5"
+            className="login-input"
           />
-          <button type="submit" className="btn w-full text-sm">
+          <button type="submit" className="btn">
             Continue
           </button>
         </form>
+
+        <div className="payment-section">
+          <img src="/payment.png" alt="Payment Information" className="payment-image" />
+          <p className="payment-remark">
+            We need support. Make sure to type your User ID for social media X or phone number along with the payment so that we can get back to you later.
+          </p>
+        </div>
       </div>
     </div>
   );

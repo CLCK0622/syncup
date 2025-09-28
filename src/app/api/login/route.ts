@@ -10,13 +10,18 @@ export async function POST(request: Request) {
   }
 
   try {
-    let user = await pool.query('SELECT * FROM users WHERE name = $1', [name]);
+    // Explicitly select id, name, and the new group_id
+    let userResult = await pool.query('SELECT id, name, group_id FROM users WHERE name = $1', [name]);
 
-    if (user.rows.length === 0) {
-      user = await pool.query('INSERT INTO users (name) VALUES ($1) RETURNING *', [name]);
+    if (userResult.rows.length === 0) {
+      // Create the user if they don't exist, returning the same fields
+      userResult = await pool.query('INSERT INTO users (name) VALUES ($1) RETURNING id, name, group_id', [name]);
     }
 
-    return NextResponse.json(user.rows[0]);
+    // The user object now includes group_id (which can be null)
+    const user = userResult.rows[0];
+
+    return NextResponse.json(user);
   } catch (error) {
     console.error('Login API error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

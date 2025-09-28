@@ -51,8 +51,48 @@ body {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
-.login-card-fixed-width {
-  width: 250px; /* Fixed narrow width for login card */
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+.group-management-card {
+    width: 100%;
+    max-width: 350px;
+    padding: 1.5rem;
+    background-color: hsl(var(--card));
+    border-radius: var(--radius);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border: 1px solid hsl(var(--border));
+    > * + * {
+        margin-top: 1rem;
+    }
+}
+
+.login-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: hsl(var(--background));
+}
+
+.login-card {
+    width: 250px;
+    margin: 2rem 0;
+    padding: 1rem;
+    background-color: hsl(var(--card));
+    border-radius: var(--radius);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border: 1px solid hsl(var(--border));
+    > * + * {
+        margin-top: 1rem;
+    }
 }
 
 /* Headings */
@@ -110,9 +150,14 @@ a {
   color: hsl(var(--primary-foreground));
   cursor: pointer;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  width: 100%;
 
   &:hover {
     background-color: hsl(var(--primary) / 0.9);
+  }
+
+  &.btn-auto {
+      width: auto; /* Modifier to make button width fit its content */
   }
 
   &.btn-outline {
@@ -159,11 +204,24 @@ a {
 }
 
 /* Forms */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    > * + * {
+        margin-top: 1rem;
+    }
+}
+
+.login-input {
+    width: 80%;
+    font-size: 0.875rem;
+}
+
 input[type="text"],
 input[type="file"] {
   display: flex;
   height: 2.5rem;
-  /* Removed width: 100%; to allow Tailwind classes to control width */
   border-radius: var(--radius);
   border: 1px solid hsl(var(--input));
   background-color: hsl(var(--background));
@@ -382,46 +440,47 @@ input[type="file"] {
   margin-top: 1.5rem;
 }
 
-/* Utility Classes */
-.text-center {
-  text-align: center;
-}
-
-.mt-1 { margin-top: 1rem; }
-.mt-2 { margin-top: 2rem; }
-.mb-1 { margin-bottom: 1rem; }
-.mb-2 { margin-bottom: 2rem; }
-.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-.px-20 { padding-left: 5rem; padding-right: 5rem; }
-.min-h-screen { min-height: 100vh; }
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.justify-center { justify-content: center; }
-.w-full { width: 100%; }
-.flex-1 { flex: 1; }
-.font-bold { font-weight: 700; }
-.text-6xl { font-size: 3.75rem; line-height: 1; }
-.text-2xl { font-size: 1.5rem; line-height: 2rem; }
-.text-xl { font-size: 1.25rem; line-height: 1.75rem; }
-.mr-4 { margin-right: 1rem; }
-.rounded-full { border-radius: 9999px; }
-.grid { display: grid; }
-.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
-.md\:grid-cols-2 { @media (min-width: 768px) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.lg\:grid-cols-3 { @media (min-width: 1024px) { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.gap-4 { gap: 1rem; }
-.border { border-width: 1px; }
-.p-4 { padding: 1rem; }
-.rounded-lg { border-radius: 0.5rem; }
-.mb-4 { margin-bottom: 1rem; }
-
 /* Custom styles for logo and header */
 .login-logo {
   display: block;
   margin: 0 auto 1rem auto; /* Center and add bottom margin */
   height: 6rem; /* h-24 */
   width: 6rem; /* w-24 */
+}
+
+.login-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-align: center;
+    color: hsl(var(--foreground));
+}
+
+.login-description {
+    font-size: 0.875rem;
+    text-align: center;
+    color: hsl(var(--muted-foreground));
+    line-height: 1.25;
+}
+
+.payment-section {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid hsl(var(--border));
+}
+
+.payment-image {
+    display: block;
+    width: 100%;
+    max-width: 200px; /* Set a max-width to make it smaller */
+    margin: 0 auto; /* Center the image */
+    border-radius: var(--radius);
+}
+
+.payment-remark {
+    font-size: 0.75rem;
+    text-align: center;
+    color: hsl(var(--muted-foreground));
+    margin-top: 0.5rem;
 }
 
 .app-header {
@@ -441,3 +500,5 @@ input[type="file"] {
   color: hsl(var(--foreground));
   margin: 0; /* Remove default h1 margin */
 }
+
+/* Utility Classes - REMOVED */
