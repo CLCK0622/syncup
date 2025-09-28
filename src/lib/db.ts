@@ -16,7 +16,7 @@ const dataFilePath = path.join(process.cwd(), 'data.json');
 
 export interface VoteData {
   ip: string;
-  vote: string;
+  vote: 'up' | 'down'; // Changed from string to a union type
   timestamp: string;
 }
 
