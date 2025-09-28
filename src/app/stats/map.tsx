@@ -1,4 +1,4 @@
-import React, {JSX} from 'react'; // Added React import
+import React from 'react'; // Added React import
 import {
   ComposableMap,
   Geographies,
@@ -32,7 +32,7 @@ export default function Map({ data }: MapProps) {
   }, {}); // Explicitly type the initial accumulator
 
   const renderMarkers = () => {
-    const markersToRender: JSX.Element[] = [];
+    const markersToRender: React.JSX.Element[] = [];
     Object.values(groupedMarkers).forEach(group => {
       if (group.length === 1) {
         // Single marker at this location
