@@ -168,7 +168,7 @@ a {
 
 .btn-up {
   background-color: hsl(142.1 76.2% 36.3%); /* Green */
-  color: hsl(142.1 70.6% 45.3%);
+  color: hsl(0 0% 100%); /* White text */
   border-color: hsl(142.1 76.2% 36.3%);
 
   &:hover {
@@ -178,7 +178,7 @@ a {
 
 .btn-down {
   background-color: hsl(0 84.2% 60.2%); /* Red */
-  color: hsl(0 84.2% 60.2%);
+  color: hsl(0 0% 100%); /* White text */
   border-color: hsl(0 84.2% 60.2%);
 
   &:hover {
