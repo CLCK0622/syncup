@@ -1,6 +1,4 @@
 import { Pool } from 'pg';
-import { promises as fs } from 'fs';
-import path from 'path';
 
 const pool = new Pool({
   user: process.env.POSTGRES_USER,
@@ -12,27 +10,34 @@ const pool = new Pool({
 
 export default pool;
 
-const dataFilePath = path.join(process.cwd(), 'data.json');
-
 export interface VoteData {
   ip: string;
-  vote: 'up' | 'down'; // Changed from string to a union type
+  vote: 'up' | 'down';
   timestamp: string;
 }
 
-export async function readDb(): Promise<VoteData[]> {
+export async function saveVote(voteData: VoteData): Promise<void> {
+  const client = await pool.connect();
   try {
-    const fileContent = await fs.readFile(dataFilePath, 'utf-8');
-    return JSON.parse(fileContent);
-  } catch (error) {
-    // If the file doesn't exist, return an empty array
-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
-      return [];
-    }
-    throw error;
+    await client.query(
+      'INSERT INTO votes (ip, vote, timestamp) VALUES ($1, $2, $3)',
+      [voteData.ip, voteData.vote, voteData.timestamp]
+    );
+  } finally {
+    client.release();
   }
 }
 
-export async function writeDb(data: VoteData[]): Promise<void> {
-  await fs.writeFile(dataFilePath, JSON.stringify(data, null, 2));
+export async function getVotes(): Promise<VoteData[]> {
+  const client = await pool.connect();
+  try {
+    const { rows } = await client.query('SELECT ip, vote, timestamp FROM votes ORDER BY timestamp DESC');
+    return rows.map(row => ({
+      ip: row.ip,
+      vote: row.vote,
+      timestamp: new Date(row.timestamp).toISOString(),
+    }));
+  } finally {
+    client.release();
+  }
 }

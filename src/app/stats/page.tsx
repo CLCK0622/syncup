@@ -1,4 +1,4 @@
-import { readDb, VoteData } from '@/lib/db';
+import { getVotes, VoteData } from '@/lib/db';
 import Map from './map';
 
 interface GeoIpResponse {
@@ -15,7 +15,7 @@ interface MarkerData {
 }
 
 async function getStats() {
-  const db = await readDb();
+  const db = await getVotes(); // Fetch votes from the database
   const stats = {
     total: db.length,
     up: db.filter((v) => v.vote === 'up').length,
