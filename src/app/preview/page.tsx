@@ -23,7 +23,7 @@ export default function Preview() {
     <div className="main-container">
       <main className="text-center">
         <h1>
-          Welcome to our Awesome Project!
+          Welcome to SyncUP!
         </h1>
 
         <p className="mb-4">
