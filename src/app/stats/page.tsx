@@ -1,6 +1,19 @@
 import { readDb, VoteData } from '@/lib/db';
 import Map from './map';
 
+interface GeoIpResponse {
+  lat: number;
+  lon: number;
+  city: string;
+  // Add other properties from ip-api.com if needed, e.g., country, regionName
+}
+
+interface MarkerData {
+  name: string;
+  coordinates: [number, number];
+  markerOffset: number;
+}
+
 async function getStats() {
   const db = await readDb();
   const stats = {
@@ -20,13 +33,13 @@ async function getStats() {
     Object.keys(stats.byIp).map(async (ip) => {
       try {
         const response = await fetch(`http://localhost:3000/api/geoip?ip=${ip}`);
-        const data = await response.json();
+        const data: GeoIpResponse = await response.json();
         if (data.lat && data.lon) {
           return {
             name: data.city || ip,
             coordinates: [data.lon, data.lat],
             markerOffset: -15,
-          };
+          } as MarkerData; // Explicitly cast to MarkerData
         }
       } catch (error) {
         console.error(`Error fetching geoip for ${ip}`, error);
@@ -35,7 +48,7 @@ async function getStats() {
     })
   );
 
-  return { db, stats, locations: locations.filter(Boolean) };
+  return { db, stats, locations: locations.filter((loc): loc is MarkerData => loc !== null) };
 }
 
 export default async function Stats() {
