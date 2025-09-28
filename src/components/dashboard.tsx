@@ -154,13 +154,13 @@ export default function Dashboard({ user }: DashboardProps) {
   return (
     <div className="main-container">
         <header className="dashboard-header">
-            <h1>Welcome, {user.name}!</h1>
+            <h1 className="text-3xl font-semibold">Welcome, {user.name}!</h1>
             <div className="dashboard-actions">
                 <label className="upload-label">
                     Upload Calendar
                     <input type="file" accept=".ics" onChange={handleFileUpload} style={{ display: 'none' }} />
                 </label>
-                <button onClick={fetchEvents} className="btn">
+                <button onClick={fetchEvents} className="btn btn-outline">
                     Refresh
                 </button>
             </div>

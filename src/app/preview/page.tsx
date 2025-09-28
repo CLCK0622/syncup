@@ -26,17 +26,16 @@ export default function Preview() {
           Welcome to our Awesome Project!
         </h1>
 
-        <p className="mt-1 mb-2">
+        <p className="mb-4">
           Ever try to grab coffee, hit the gym, or catch a concert with friends but can’t line up schedules?
           We’re testing a new app that syncs with your calendar (Google/Apple), finds when your free time overlaps with others, and suggests activities you can do together—from workouts to study sessions to last-minute hangs.
         </p>
 
         {!voted ? (
-          <div>
+          <div className="flex justify-center gap-4 mt-8">
             <button
               onClick={() => handleVote("up")}
               className="btn btn-up"
-              style={{ marginRight: "1rem" }}
             >
               Up!
             </button>
@@ -48,7 +47,7 @@ export default function Preview() {
             </button>
           </div>
         ) : (
-          <p className="mt-2">Thanks for your feedback!</p>
+          <p className="mt-8 text-lg">Thanks for your feedback!</p>
         )}
       </main>
     </div>

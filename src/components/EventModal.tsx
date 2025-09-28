@@ -25,17 +25,18 @@ export default function EventModal({ slot, onClose, onCreateEvent }: EventModalP
     <div className="modal-overlay">
       <div className="modal-content">
         <h2>Schedule Event</h2>
-        <p>Time: {slot.start.toLocaleString()}</p>
+        <p className="text-muted-foreground mb-4">Time: {slot.start.toLocaleString()}</p>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
             value={summary}
             onChange={(e) => setSummary(e.target.value)}
             placeholder="Event summary"
+            className="input"
           />
           <div className="modal-actions">
             <button type="submit" className="btn">Create</button>
-            <button type="button" onClick={onClose} className="btn">Cancel</button>
+            <button type="button" onClick={onClose} className="btn btn-outline">Cancel</button>
           </div>
         </form>
       </div>

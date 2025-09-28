@@ -15,13 +15,13 @@ export default function TimeSlotList({ timeSlots, onSelectSlot }: TimeSlotListPr
         timeSlots.map((slot, index) => (
           <div key={index} className="free-day-item">
             <span>{slot.start.toLocaleString()}</span>
-            <button onClick={() => onSelectSlot(slot)} className="btn" style={{ marginLeft: '1rem' }}>
+            <button onClick={() => onSelectSlot(slot)} className="btn btn-outline">
               Schedule
             </button>
           </div>
         ))
       ) : (
-        <p>No common free time slots found in the next 7 days.</p>
+        <p className="text-muted-foreground">No common free time slots found in the next 7 days.</p>
       )}
     </div>
   );

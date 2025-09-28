@@ -59,53 +59,59 @@ export default async function Stats() {
       <main>
         <h1>Statistics</h1>
 
-        <div className="text-center mb-2">
-          <p>Total Votes: {stats.total}</p>
-          <p>Upvotes: {stats.up}</p>
-          <p>Downvotes: {stats.down}</p>
-        </div>
+        {db.length === 0 ? (
+          <p className="text-center mt-4 text-lg text-muted-foreground">No vote data available yet. Cast some votes on the /preview page!</p>
+        ) : (
+          <>
+            <div className="text-center mb-6">
+              <p className="text-2xl font-semibold">Total Votes: {stats.total}</p>
+              <p className="text-xl">Upvotes: {stats.up}</p>
+              <p className="text-xl">Downvotes: {stats.down}</p>
+            </div>
 
-        <div>
-          <h2>Votes by IP Address</h2>
-          <div className="stats-grid">
-            {Object.entries(stats.byIp).map(([ip, votes]) => (
-              <div key={ip} className="stat-card">
-                <p className="ip-address">{ip}</p>
-                <p>Up: {votes.up}</p>
-                <p>Down: {votes.down}</p>
+            <div className="mb-8">
+              <h2>Votes by IP Address</h2>
+              <div className="stats-grid">
+                {Object.entries(stats.byIp).map(([ip, votes]) => (
+                  <div key={ip} className="stat-card">
+                    <p className="ip-address">{ip}</p>
+                    <p>Up: {votes.up}</p>
+                    <p>Down: {votes.down}</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
 
-        <div className="mt-2">
-          <h2>Vote Map</h2>
-          <div className="map-container">
-            <Map data={locations} />
-          </div>
-        </div>
+            <div className="mb-8">
+              <h2>Vote Map</h2>
+              <div className="map-container">
+                <Map data={locations} />
+              </div>
+            </div>
 
-        <div className="mt-2">
-          <h2>Detailed Vote Data</h2>
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>IP Address</th>
-                <th>Vote</th>
-                <th>Timestamp</th>
-              </tr>
-            </thead>
-            <tbody>
-              {db.map((vote, index) => (
-                <tr key={index}>
-                  <td>{vote.ip}</td>
-                  <td>{vote.vote}</td>
-                  <td>{new Date(vote.timestamp).toLocaleString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            <div>
+              <h2>Detailed Vote Data</h2>
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>IP Address</th>
+                    <th>Vote</th>
+                    <th>Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {db.map((vote, index) => (
+                    <tr key={index}>
+                      <td>{vote.ip}</td>
+                      <td>{vote.vote}</td>
+                      <td>{new Date(vote.timestamp).toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
       </main>
     </div>
   );
