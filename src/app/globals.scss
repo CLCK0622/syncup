@@ -536,6 +536,11 @@ input[type="file"] {
     margin-top: 1rem;
 }
 
+.invitation-item {
+    display: flex;
+    flex-direction: column;
+}
+
 .text-center {
     text-align: center;
 }

@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 
 interface TimeSlot {
@@ -15,7 +16,8 @@ interface EventModalProps {
 }
 
 export default function EventModal({ slot, onClose, onCreateEvent, gptSuggestion, isLoadingGptSuggestion }: EventModalProps) {
-  const [summary, setSummary] = useState(gptSuggestion || '');
+  // Initialize the summary as a blank string, as requested.
+  const [summary, setSummary] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

@@ -208,11 +208,22 @@ export default function Dashboard({ user, onSignOut, onUserUpdate }: DashboardPr
   };
 
   const handleAcceptInvitation = async (invitationId: number) => {
-    // This logic remains the same...
     const inv = pendingInvitations.find(i => i.id === invitationId);
     if (!inv) return;
     try {
-      await fetch('/api/invitations/accept', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ invitationId, userId: user.id, summary: inv.gptSuggestion || inv.eventSummary, dtstart: inv.dtstart, dtend: inv.dtend }) });
+      // CORRECTED: Added the missing 'availableUserIds' field to the request body
+      await fetch('/api/invitations/accept', { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify({ 
+          invitationId, 
+          userId: user.id, 
+          summary: inv.gptSuggestion || inv.eventSummary, 
+          dtstart: inv.dtstart, 
+          dtend: inv.dtend,
+          availableUserIds: [user.id] // The backend requires this field
+        }) 
+      });
       fetchAllData();
     } catch (error) { console.error(`Error accepting invitation ${invitationId}:`, error); }
   };
@@ -275,7 +286,7 @@ export default function Dashboard({ user, onSignOut, onUserUpdate }: DashboardPr
               <h3 className="event-summary">Pending Invitations</h3>
               {pendingInvitations.length > 0 ? (
                 pendingInvitations.map(invitation => (
-                  <div key={invitation.id} className="free-day-item flex-col items-start">
+                  <div key={invitation.id} className="invitation-item">
                     <div>
                       <span>{new Date(invitation.dtstart).toLocaleString()} - {new Date(invitation.dtend).toLocaleString()}</span>
                       <p>From: {allUsers.find(u => u.id === invitation.senderUserId)?.name || 'Unknown'}</p>
