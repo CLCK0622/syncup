@@ -16,21 +16,18 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold mb-4 text-center">Enter your name</h1>
-        <form onSubmit={handleSubmit}>
+    <div className="page-container">
+      <div className="glass-card" style={{ maxWidth: '450px', width: '100%' }}>
+        <h1 className="card-title">Enter your name</h1>
+        <form onSubmit={handleSubmit} className="inline-form">
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full px-3 py-2 border rounded-md"
+            className="input"
             placeholder="Your name"
           />
-          <button
-            type="submit"
-            className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-md hover:bg-blue-600"
-          >
+          <button type="submit" className="button">
             Continue
           </button>
         </form>
