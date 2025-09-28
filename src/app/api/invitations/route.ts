@@ -23,11 +23,16 @@ export async function GET(req: Request) {
             );
 
             return NextResponse.json(rows, { status: 200 });
+        } catch (dbError) {
+            // THIS IS THE CRUCIAL LOGGING PART
+            console.error('Database error fetching invitations:', dbError);
+            return NextResponse.json({ error: 'Failed to fetch invitations from database' }, { status: 500 });
         } finally {
             client.release();
         }
+
     } catch (error) {
-        console.error('Error fetching invitations:', error);
-        return NextResponse.json({ error: 'Failed to fetch invitations' }, { status: 500 });
+        console.error('Error in GET /api/invitations route:', error);
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
 }

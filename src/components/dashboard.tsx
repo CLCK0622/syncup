@@ -59,18 +59,13 @@ export default function Dashboard({ user }: DashboardProps) {
   };
 
   const fetchUsers = async () => {
-    // This should ideally fetch all registered users, not just those with calendars
-    // For now, we'll use the existing /api/calendars to get user names
-    // In a real app, you'd have a /api/users endpoint.
     try {
-      const response = await fetch('/api/calendars'); // Assuming this gives us all relevant users
+      const response = await fetch('/api/users'); // Call the new /api/users endpoint
       if (response.ok) {
-        const data: CalendarEvent[] = await response.json();
-        const users = Array.from(new Set(data.map(e => e.name))).map((name, index) => ({
-          id: index + 1, // This ID is not from DB, needs to be fixed if users table is used
-          name
-        }));
-        setAllUsers(users);
+        const data: { id: number; name: string }[] = await response.json();
+        setAllUsers(data); // Set users directly from DB
+      } else {
+        console.error('Error fetching users:', response.statusText);
       }
     } catch (error) {
       console.error('Error fetching users:', error);
