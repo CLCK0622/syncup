@@ -4,7 +4,7 @@ import "./globals.scss";
 
 export const metadata: Metadata = {
   title: "SyncUp",
-  description: "Find common availability with your team.",
+  description: "Make time among people you care about.",
 };
 
 export default function RootLayout({
