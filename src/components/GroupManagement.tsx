@@ -10,9 +10,10 @@ interface User {
 interface GroupManagementProps {
   user: User;
   onUserUpdate: (user: User) => void;
+  onSignOut: () => void; // Add the onSignOut prop
 }
 
-export default function GroupManagement({ user, onUserUpdate }: GroupManagementProps) {
+export default function GroupManagement({ user, onUserUpdate, onSignOut }: GroupManagementProps) {
   const [joinCode, setJoinCode] = useState('');
   const [createdGroupCode, setCreatedGroupCode] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -75,7 +76,7 @@ export default function GroupManagement({ user, onUserUpdate }: GroupManagementP
         <div className="form-section">
           <h2 className="form-title">Create a New Group</h2>
           {createdGroupCode ? (
-            <div style={{ textAlign: 'center' }}>
+            <div className="text-center">
               <p className="login-description">Your new group code is:</p>
               <p className="group-code">{createdGroupCode}</p>
               <p className="group-code-remark">Share this code with your friends!</p>
@@ -96,8 +97,7 @@ export default function GroupManagement({ user, onUserUpdate }: GroupManagementP
               onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
               placeholder="Enter 4-digit code"
               maxLength={4}
-              className="login-input"
-              style={{ textAlign: 'center' }}
+              className="login-input input-centered"
             />
             <button type="submit" className="btn btn-outline">
               Join Group
@@ -106,6 +106,12 @@ export default function GroupManagement({ user, onUserUpdate }: GroupManagementP
         </div>
 
         {error && <p className="error-message">{error}</p>}
+
+        {/* Add the Sign Out button at the bottom */}
+        <div className="form-section-divider" />
+        <button onClick={onSignOut} className="btn btn-ghost">
+          Sign Out
+        </button>
       </div>
     </div>
   );

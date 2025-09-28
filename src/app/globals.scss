@@ -51,7 +51,7 @@ body {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
-.centered-container {
+.page-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,10 +60,9 @@ body {
     padding: 1rem;
 }
 
-.group-management-card {
-    width: 100%;
-    max-width: 350px;
-    padding: 1.5rem;
+.login-card {
+    width: 250px;
+    padding: 1rem;
     background-color: hsl(var(--card));
     border-radius: var(--radius);
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -73,25 +72,16 @@ body {
     }
 }
 
-.login-page-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: hsl(var(--background));
-}
-
-.login-card {
-    width: 250px;
-    margin: 2rem 0;
-    padding: 1rem;
+.group-management-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
     background-color: hsl(var(--card));
     border-radius: var(--radius);
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     border: 1px solid hsl(var(--border));
     > * + * {
-        margin-top: 1rem;
+        margin-top: 1.5rem;
     }
 }
 
@@ -122,6 +112,7 @@ p {
   font-size: 1rem;
   line-height: 1.75;
   color: hsl(var(--foreground));
+  margin: 0;
 }
 
 /* Links */
@@ -156,10 +147,6 @@ a {
     background-color: hsl(var(--primary) / 0.9);
   }
 
-  &.btn-auto {
-      width: auto; /* Modifier to make button width fit its content */
-  }
-
   &.btn-outline {
     background-color: transparent;
     color: hsl(var(--primary));
@@ -180,6 +167,11 @@ a {
       background-color: hsl(var(--accent));
       color: hsl(var(--accent-foreground));
     }
+  }
+
+  &.btn-sm {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -448,6 +440,17 @@ input[type="file"] {
   width: 6rem; /* w-24 */
 }
 
+.login-page-container {
+    margin: auto;
+}
+
+.main-div-container {
+    align-content: center;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+
 .login-title {
     font-size: 1.25rem;
     font-weight: 700;
@@ -501,4 +504,55 @@ input[type="file"] {
   margin: 0; /* Remove default h1 margin */
 }
 
-/* Utility Classes - REMOVED */
+.form-section {
+    padding: 1rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+}
+
+.form-title {
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.group-code {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: hsl(var(--primary));
+    letter-spacing: 0.1em;
+    margin: 0.5rem 0;
+}
+
+.group-code-remark {
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+}
+
+.error-message {
+    font-size: 0.875rem;
+    text-align: center;
+    color: hsl(var(--destructive));
+    margin-top: 1rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.input-centered {
+    text-align: center;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.form-section-divider {
+    border-top: 1px solid hsl(var(--border));
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+}
