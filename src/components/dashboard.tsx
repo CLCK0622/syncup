@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import TimeSlotList from './TimeSlotList';
+import EventModal from './EventModal';
 
 interface DashboardProps {
   user: { id: number; name: string };
@@ -12,9 +14,16 @@ interface CalendarEvent {
   location: string;
 }
 
+interface TimeSlot {
+  start: Date;
+  end: Date;
+}
+
 export default function Dashboard({ user }: DashboardProps) {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
-  const [commonFreeDays, setCommonFreeDays] = useState<Date[]>([]);
+  const [commonFreeTimeSlots, setCommonFreeTimeSlots] = useState<TimeSlot[]>([]);
+  const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
+  const [allUsers, setAllUsers] = useState<{ id: number; name: string }[]>([]);
 
   const fetchEvents = async () => {
     try {
@@ -23,48 +32,75 @@ export default function Dashboard({ user }: DashboardProps) {
         const data: CalendarEvent[] = await response.json();
         const futureEvents = data.filter(event => new Date(event.dtstart) > new Date());
         setEvents(futureEvents);
-        findCommonFreeDays(futureEvents);
+        findCommonFreeTimeSlots(futureEvents);
       }
     } catch (error) {
       console.error('Error fetching events:', error);
     }
   };
 
-  const findCommonFreeDays = (allEvents: CalendarEvent[]) => {
+  const fetchUsers = async () => {
+    // In a real app, you would fetch this from an API
+    // For now, we'll extract it from the events
+    const response = await fetch('/api/calendars');
+    if (response.ok) {
+        const data: CalendarEvent[] = await response.json();
+        const users = Array.from(new Set(data.map(e => e.name))).map((name, index) => ({ id: index + 1, name }));
+        setAllUsers(users);
+    }
+  };
+
+  const findCommonFreeTimeSlots = (allEvents: CalendarEvent[]) => {
     const myEvents = allEvents.filter(event => event.name === user.name);
     const otherUsersEvents = allEvents.filter(event => event.name !== user.name);
     const otherUserNames = [...new Set(otherUsersEvents.map(event => event.name))];
+    const meetingDuration = 30; // 30 minutes
 
-    const isBusy = (date: Date, eventList: CalendarEvent[]) => {
+    const isBusy = (slot: TimeSlot, eventList: CalendarEvent[]) => {
       return eventList.some(event => {
-        const start = new Date(event.dtstart);
-        const end = new Date(event.dtend);
-        return date >= start && date <= end;
+        const eventStart = new Date(event.dtstart);
+        const eventEnd = new Date(event.dtend);
+        return slot.start < eventEnd && slot.end > eventStart;
       });
     };
 
-    const freeDays: Date[] = [];
+    const freeSlots: TimeSlot[] = [];
     const today = new Date();
-    for (let i = 0; i < 30; i++) {
+    today.setHours(9, 0, 0, 0); // Start from 9 AM
+
+    for (let i = 0; i < 7; i++) { // Check for the next 7 days
       const day = new Date(today);
       day.setDate(today.getDate() + i);
 
-      if (!isBusy(day, myEvents)) {
-        const freeGroupCount = otherUserNames.filter(name => {
-          const userEvents = otherUsersEvents.filter(event => event.name === name);
-          return !isBusy(day, userEvents);
-        }).length;
+      for (let h = 9; h < 17; h++) { // Check from 9 AM to 5 PM
+        for (let m = 0; m < 60; m += meetingDuration) {
+          const slotStart = new Date(day);
+          slotStart.setHours(h, m, 0, 0);
 
-        if (freeGroupCount >= 2) {
-          freeDays.push(day);
+          const slotEnd = new Date(slotStart);
+          slotEnd.setMinutes(slotStart.getMinutes() + meetingDuration);
+
+          const slot = { start: slotStart, end: slotEnd };
+
+          if (!isBusy(slot, myEvents)) {
+            const freeGroupCount = otherUserNames.filter(name => {
+              const userEvents = otherUsersEvents.filter(event => event.name === name);
+              return !isBusy(slot, userEvents);
+            }).length;
+
+            if (freeGroupCount >= 2) {
+              freeSlots.push(slot);
+            }
+          }
         }
       }
     }
-    setCommonFreeDays(freeDays);
+    setCommonFreeTimeSlots(freeSlots);
   };
 
   useEffect(() => {
     fetchEvents();
+    fetchUsers();
   }, []);
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,6 +121,33 @@ export default function Dashboard({ user }: DashboardProps) {
         }
       };
       reader.readAsText(file);
+    }
+  };
+
+  const handleSchedule = (slot: TimeSlot) => {
+    setSelectedSlot(slot);
+  };
+
+  const handleCreateEvent = async (summary: string) => {
+    if (!selectedSlot) return;
+
+    const userIds = allUsers.map(u => u.id);
+
+    try {
+      await fetch('/api/events', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          summary,
+          dtstart: selectedSlot.start.toISOString(),
+          dtend: selectedSlot.end.toISOString(),
+          userIds,
+        }),
+      });
+      setSelectedSlot(null);
+      fetchEvents();
+    } catch (error) {
+      console.error('Error creating event:', error);
     }
   };
 
@@ -118,18 +181,18 @@ export default function Dashboard({ user }: DashboardProps) {
         </div>
 
         <div className="dashboard-column">
-          <h2>Common Free Days (Group of 3+)</h2>
-          <div className="free-day-card">
-              {commonFreeDays.length > 0 ? (
-                commonFreeDays.map((day, index) => (
-                  <p key={index} className="free-day-item">{day.toLocaleDateString()}</p>
-                ))
-              ) : (
-                <p>No common free days found in the next month.</p>
-              )}
-          </div>
+          <h2>Common Free Time Slots (Group of 3+)</h2>
+          <TimeSlotList timeSlots={commonFreeTimeSlots} onSelectSlot={handleSchedule} />
         </div>
       </div>
+
+      {selectedSlot && (
+        <EventModal
+          slot={selectedSlot}
+          onClose={() => setSelectedSlot(null)}
+          onCreateEvent={handleCreateEvent}
+        />
+      )}
     </div>
   );
 }
