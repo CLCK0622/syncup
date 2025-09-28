@@ -59,6 +59,13 @@ export default async function Stats() {
 
   return (
     <div className="main-container">
+      <header className="dashboard-header flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <img src="/public/logo-512x512.png" alt="SyncUP Logo" className="h-8 w-8" />
+          <h1 className="text-xl font-bold text-foreground m-0">SyncUP</h1>
+        </div>
+        {/* You can add other header actions here if needed */}
+      </header>
       <main>
         <h1>Statistics</h1>
 

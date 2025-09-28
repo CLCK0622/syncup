@@ -356,7 +356,10 @@ export default function Dashboard({ user }: DashboardProps) {
   return (
     <div className="main-container">
         <header className="dashboard-header">
-            <h1 className="text-3xl font-semibold">Welcome, {user.name}!</h1>
+            <div className="app-header">
+                <img src="/logo-512x512.png" alt="SyncUP Logo" className="app-logo" />
+                <h1 className="app-title">SyncUP</h1>
+            </div>
             <div className="dashboard-actions">
                 <button onClick={() => setShowMyCalendar(true)} className="btn btn-outline">
                     See My Calendar

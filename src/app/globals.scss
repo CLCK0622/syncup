@@ -161,8 +161,9 @@ a {
 /* Forms */
 input[type="text"],
 input[type="file"] {
-  box-sizing: border-box; /* Added to ensure width includes padding and border */
+  display: flex;
   height: 2.5rem;
+  /* Removed width: 100%; to allow Tailwind classes to control width */
   border-radius: var(--radius);
   border: 1px solid hsl(var(--input));
   background-color: hsl(var(--background));
@@ -414,3 +415,29 @@ input[type="file"] {
 .p-4 { padding: 1rem; }
 .rounded-lg { border-radius: 0.5rem; }
 .mb-4 { margin-bottom: 1rem; }
+
+/* Custom styles for logo and header */
+.login-logo {
+  display: block;
+  margin: 0 auto 1rem auto; /* Center and add bottom margin */
+  height: 6rem; /* h-24 */
+  width: 6rem; /* w-24 */
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* gap-2 */
+}
+
+.app-logo {
+  height: 2rem; /* h-8 */
+  width: 2rem; /* w-8 */
+}
+
+.app-title {
+  font-size: 1.25rem; /* text-xl */
+  font-weight: 700; /* font-bold */
+  color: hsl(var(--foreground));
+  margin: 0; /* Remove default h1 margin */
+}
