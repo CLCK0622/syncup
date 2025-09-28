@@ -1,5 +1,8 @@
 import { getVotes, VoteData } from '@/lib/db';
-import Map from './map';
+import dynamic from 'next/dynamic'; // Import dynamic
+
+// Dynamically import the Map component with ssr: false
+const Map = dynamic(() => import('./map'), { ssr: false });
 
 interface GeoIpResponse {
   lat: number;
@@ -61,8 +64,8 @@ export default async function Stats() {
     <div className="main-container">
       <header className="dashboard-header flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <img src="/public/logo-512x512.png" alt="SyncUP Logo" className="h-8 w-8" />
-          <h1 className="text-xl font-bold text-foreground m-0">SyncUP</h1>
+          <img src="/logo-512x512.png" alt="SyncUP Logo" className="app-logo" />
+          <h1 className="app-title">SyncUP</h1>
         </div>
         {/* You can add other header actions here if needed */}
       </header>
