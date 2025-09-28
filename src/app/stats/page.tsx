@@ -35,7 +35,7 @@ async function getStats() {
     Object.keys(stats.byIp).map(async (ip) => {
       try {
         // Ensure geoip data is always fresh
-        const response = await fetch(`http://localhost:3000/api/geoip?ip=${ip}`, { cache: 'no-store' });
+        const response = await fetch(`/api/geoip?ip=${ip}`, { cache: 'no-store' });
         const data: GeoIpResponse = await response.json();
         if (data.lat && data.lon) {
           return {
